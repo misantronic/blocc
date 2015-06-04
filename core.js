@@ -111,13 +111,13 @@ function C(add) {
 }
 
 // key events
-onkeydown = onkeyup = function(e) {
+onkeydown = onkeyup = function(e, x) {
 	// move
-	if(e.keyCode == 37 || e.keyCode == 39)
-		k[e.keyCode] = e.type == 'keydown';
+	if(e[x="keyCode"] == 37 || e[x] == 39)
+		k[e[x]] = e.type == 'keydown';
 
 	// jump
-	if(e.type == 'keydown' && e.keyCode == 38 && !j && J < 2) {
+	if(e.type == 'keydown' && e[x] == 38 && !j && J < 2) {
 		j = 1; J++;
 	}
 };
