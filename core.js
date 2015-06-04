@@ -1,81 +1,114 @@
-var d = 1;	// player position
-var k = [];	// key map
-var j = 0;	// jump
-var J = 0;	// double jump counter
-var c = 0;
-var P = [	// platforms / walls
-		301, 302, 303, 304, 305, 306,
-		507, 508, 509, 510, 511, 512,
-		713, 714, 715, 716, 717, 718,
-		1025, 1026, 1027,
-		401, 501, 601, 701, 801, 901, 1001, 1101, 1201, 1301, 1401, 1501, 1601, 1701, 1801, 1901, 2001, 2101, 2201, 2301, 2401,
-		2399, 2299, 2199, 2099, 1999, 1899, 1799, 1699,
-		2030, 2031, 2032, 2033, 2034, 2035, 2036, 2037, 2038, 2039, 2040,
-		2070, 2071, 2072, 2073, 2074, 2075, 2076, 2077, 2078, 2079, 2080,
-		2328, 2329, 23330
-	];
-var e = 2302, E = 1; // enemy
+var d = { x: 1, y: 0},			// player position
+k = [],							// key map
+j = 0,							// jump
+J = 0,							// double jump counter
+c = 0,							// camera
+e = [ 							// enemies
+	{ x: 51, y: 23 },
+	{ x: 121, y: 23 },
+	{ x: 141, y: 12 }
+];
 
-for(var i=2401; i <= 2500; i++) {
-	if(i == 2440 || i == 2441 || i == 2442 || i == 2470 || i == 2471 || i == 2472) continue; // holes
+// platforms
+var P = [
+	[ 0 ], // 0
+	[ 0 ], // 1
+	[ 0, 1, 2, 3, 4, 5 ], // 2
+	[ 0 ], // 3
+	[ 0, 6, 7, 8, 9, 10, 11 ], // 4
+	[ 0 ], // 5
+	[ 0 ], // 6
+	[ 0, 14, 15, 16, 17, 18 ], // 7
+	[ 0 ], // 8
+	[ 0 ], // 9
+	[ 0, 25, 26, 27, 105, 106, 107, 108, 109, 110, 120, 121, 122, 123, 124, 125 ], // 10
+	[ 0 ], // 11
+	[ 0, 140, 160 ], // 12
+	[ 0, 99, 100, 140, 141, 142, 143, 144, 145, 146, 147, 148, 149, 150, 151, 152, 153, 154, 155, 156, 157, 158, 159, 160 ], // 13
+	[ 0, 99 ], // 14
+	[ 0, 99 ], // 15
+	[ 0, 99 ], // 16
+	[ 0, 99 ], // 17
+	[ 0, 99 ], // 18
+	[ 0, 99, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 80, 81, 82, 83, 84, 85, 86, 87, 88, 89, 90 ], // 19
+	[ 0, 99 ], // 20
+	[ 0, 99 ], // 21
+	[ 0, 99 ], // 22
+	[ 0, 28, 29, 30, 50, 99, 120, 170 ], // 23
+	[  ] // 24
+];
 
-	P.push(i);
+// floor
+for(var i=0; i <= 350; i++) {
+	if(i > 39 && i < 50 || i > 100 && i < 120) continue; // holes
+
+	P[24][i] = i;
 }
 
-var x = setInterval(function(s, I) {
-	s = "";
-	I = "indexOf";
+var X = setInterval(function(indexOf, o, E, l, i, y, m) {
+	o = "";
+	indexOf = "indexOf";
 
 	// move
-	k[39] && !~P[I](d+1) ? d++ : k[37] && !~P[I](d-1) && d--;
+	k[39] && !~P[d.y][indexOf](d.x+1) ? d.x++ && C(1) : k[37] && !~P[d.y][indexOf](d.x-1) && d.x-- && C(-1);
 
 	// enemy movement
-	~P[I](e+1) ? E=0 : ~P[I](e-1) && (E=1);
-	e = E ? e+.5 : e-.5;
+	for(i=0; i < e.length; i++) {
+		E = e[i];
+		~P[E.y][indexOf](E.x+1) ? E.a = 0 : ~P[E.y][indexOf](E.x-1) && (E.a = 1);
+		E.x = E.a ? E.x+.5 : E.x-.5;
+	}
+
 
 	// check death
-	e == d && clearInterval(x);
+	(d.y == 24 || d.x == E.x && d.y == E.y) && clearInterval(X);
 
 	// jumping
 	if(j) {
-		d -= (100 * j);
+		d.y -= j;
 		j++;
 
-		if(j > 4 || ~P[I](d-100)) j = 0;
+		// limit jump
+		d.y < 0 && (d.y = 0);
+
+		// end jump
+		j = j > 4 ? 0 : j
 	}
 
-	// draw world
-	for(i = c; i < 2500; i++) {
-		if(i == d) {		// player block
-			s += "▄";
-		} else if(i == e) {	// enemy block
-			s += E ? "c" : "ↄ";
-		} else if(~P[I](i)) {
-			s += "-";		// platform block
-		} else  {			// world block
-			s += " ";
+	for(y = 0; y < P.length; y++) {
+		for(i = c; i < c + 100; i++) {
+			// enemies
+			m = 1;
+			for(l=0; l < e.length; l++) {
+				E = e[l];
+				if(E.x == i && E.y == y) {
+					// check death
+					if(E.x == d.x && E.y == d.y) clearInterval(X);
+
+					o += E.a == 1 ? "c" : "ↄ";
+					m = 0;
+					break
+				}
+			}
+
+			m && (
+				o += d.x == i && d.y == y ? "▄"		// player block
+					: ~P[y][indexOf](i) ? "-"		// platform block
+					: " ");							// world block
 		}
-
-		if(i % (c+100) == 0) {	// line breaks
-			s += "\n";
-		}
+		o += "\n";
 	}
 
-	if(!~P[I](d+100)) {	// platform detection
-		d += 100;
-	} else {
-		J = 0;			// reset double jump
-	}
-
-	// move camera
-
-
-	// reset player position
-	if(d > 2500) d = 1;
+	// platform detection || reset double jump
+	P[d.y+1] && !~P[d.y+1][indexOf](d.x) && d.y++ || (J = 0);
 
 	// output
-	p.innerHTML = s;
+	p.innerHTML = o;
 }, 50);
+
+function C(add) {
+	c = d.x < 26 ? 0 : c+add;
+}
 
 // key events
 onkeydown = onkeyup = function(e) {

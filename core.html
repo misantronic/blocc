@@ -3,9 +3,37 @@
 <head lang="en">
 	<meta charset="UTF-8">
 	<title></title>
+	<style>
+		body {
+			overflow: hidden;
+			padding: 0;
+			margin: 0;
+			background: #000;
+			color: rgb(249, 66, 232);
+			font-family: "Courier New", serif;
+		}
+
+		pre {
+			transform: scale(1.5);
+			transform-origin: 0 0;
+			width: 980px;
+			max-width: 100%;
+			margin: 0 auto;
+		}
+
+		.tut {
+			text-align: center;
+			margin-top: 300px;
+			line-height: 160%;
+			color: #DDD;
+		}
+	</style>
 </head>
 <body>
 	<pre id="p"></pre>
+	<div class="tut">
+		&larr; &rarr; Move<br/>&uarr; Jump<br/>&uarr; &uarr; Double-Jump
+	</div>
 	<script src="core.js"></script>
 </body>
 </html>
