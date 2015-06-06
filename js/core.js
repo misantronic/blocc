@@ -40,6 +40,7 @@ var X = setInterval(function(indexOf, o, E, l, i, y, m) {
 					// check death
 					if(E.x == d.x && E.y == d.y) clearInterval(X);
 
+					// draw enemy
 					o += "<i>▄</i>";
 					m = 0;
 					break
@@ -49,12 +50,13 @@ var X = setInterval(function(indexOf, o, E, l, i, y, m) {
 			// goal
 			if(G.x == d.x && G.y == d.y) clearInterval(X);
 
-			// player, world and platforms
+			// draw world
 			m && (
 				o += d.x == i && d.y == y ? "<b>▄</b>"	// player block
 					: G.x == i && G.y == y ? "<u>▄</u>"	// goal block
 					: ~P[y][indexOf](i) ? "▄"			// platform block
-					: " ");								// world block
+					: " "								// world block
+			);
 		}
 		o += "\n";
 	}
