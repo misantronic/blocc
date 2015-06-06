@@ -8,8 +8,8 @@
 			overflow: hidden;
 			padding: 0;
 			margin: 0;
-			background: #000;
-			color: rgb(249, 66, 232);
+			background: #111;
+			color: #EEE;
 			font-family: "Courier New", serif;
 		}
 
@@ -21,11 +21,38 @@
 			margin: 0 auto;
 		}
 
+		pre b {
+			color: rgb(249, 66, 232);
+			animation: player;
+		}
+
+		@-webkit-keyframes player {
+
+		}
+
+		pre i {
+			color: lawngreen;
+			font-style: normal;
+			font-weight: bold;
+		}
+
+		pre u {
+			text-decoration: none;
+			color: yellow;
+		}
+
 		.tut {
 			text-align: center;
 			margin-top: 300px;
 			line-height: 160%;
 			color: #DDD;
+		}
+
+		code {
+			white-space: pre-line;
+			display: block;
+			margin: 25px auto 0;
+			width: 450px;
 		}
 	</style>
 </head>
@@ -34,6 +61,9 @@
 	<div class="tut">
 		&larr; &rarr; Move<br/>&uarr; Jump<br/>&uarr; &uarr; Double-Jump
 	</div>
-	<script src="core.js"></script>
+	<script src="js/world-1.js"></script>
+	<script src="js/core.js"></script>
+
+	<code></code>
 </body>
 </html>
