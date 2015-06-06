@@ -59,9 +59,8 @@ var X = setInterval(function(indexOf, o, E, l, i, y, m) {
 		E.x = E.a ? E.x+.5 : E.x-.5;
 	}
 
-
 	// check death
-	(d.y == 24 || d.x == E.x && d.y == E.y) && clearInterval(X);
+	d.y > 23 && clearInterval(X);
 
 	// jumping
 	if(j) {
