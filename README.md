@@ -1,1 +1,1 @@
-A tiny ascii side-scrolling jump'n'run.
+A tiny ascii side-scrolling platformer
