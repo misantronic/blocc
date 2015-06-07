@@ -1,15 +1,14 @@
 var k = [],		// key map
-j = J = c = 0;	// jump, double jump counter, camera
-
-var X = setInterval(function(indexOf, o, E, l, i, y, m) {
+j = J = c = 0,	// jump, double jump counter, camera
+_ = setInterval(function(indexOf, o, E, l, i, y, m) {
 	o = "";
 	indexOf = "indexOf";
 
-	// move incl. platform x-detection
+	// move player / platform x-detection / camera scrolling
 	k[39] && !~P[d.y][indexOf](d.x+1) ? d.x++ && (c = d.x < 26 ? 0 : c+1) : k[37] && !~P[d.y][indexOf](d.x-1) && d.x-- && (c = d.x < 26 ? 0 : c-1);
 
 	// check death
-	d.y > 24 && clearInterval(X);
+	d.y > 24 && clearInterval(_);
 
 	// jumping
 	if(j) {
@@ -38,7 +37,7 @@ var X = setInterval(function(indexOf, o, E, l, i, y, m) {
 
 				if(E.x == i && E.y == y) {
 					// check death
-					if(E.x == d.x && E.y == d.y) clearInterval(X);
+					if(E.x == d.x && E.y == d.y) clearInterval(_);
 
 					// draw enemy
 					o += "<i>▄</i>";
@@ -48,7 +47,7 @@ var X = setInterval(function(indexOf, o, E, l, i, y, m) {
 			}
 
 			// goal
-			if(G.x == d.x && G.y == d.y) clearInterval(X);
+			if(G.x == d.x && G.y == d.y) clearInterval(_);
 
 			// draw world
 			m && (
