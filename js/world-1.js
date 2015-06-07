@@ -1,10 +1,12 @@
 var d = { x: 1, y: 0};			// player position
 var e = [ 						// enemies
 		{ x: 51, y: 23 },
+		{ x: 91, y: 19 },
+		{ x: 31, y: 23 },
 		{ x: 121, y: 23 },
 		{ x: 141, y: 12 }
 	];
-var G = { x: 239, y: 5 };		// Goal
+var G = { x: 240, y: 5 };		// Goal
 var P = [						// platforms
 	[ 0 ], // 0
 	[ 0 ], // 1
