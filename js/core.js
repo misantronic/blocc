@@ -33,7 +33,7 @@ var X = setInterval(function(indexOf, o, E, l, i, y, m) {
 				// enemy movement
 				if(i == c && !y) {
 					~P[E.y][indexOf](E.x + 1) ? E.a = 0 : ~P[E.y][indexOf](E.x - 1) && (E.a = 1);
-					E.x = E.a ? E.x + .5 : E.x - .5
+					E.x = E.a ? E.x + 1 : E.x - 1
 				}
 
 				if(E.x == i && E.y == y) {
